@@ -1,5 +1,6 @@
 public class Main {
     public static void main(String[] args) {
+    	//ARRAYLIST ?
         Carte[] JeuDeCarte = new Carte[Carte.NB_CARTES];
         initCartes(JeuDeCarte);
 
@@ -8,13 +9,14 @@ public class Main {
         afficherMur(Mur);
 
         //Tirer une carte
-        /*Carte cartePioch√©e = new Carte();
+        /*Carte cartePiochÈe = new Carte();
         cartePioch√©e = tirerUneCarte(JeuDeCarte)*/
     }
 
 
     // A optimiser et clean
     public static void initCartes(Carte[] JeuDeCarte){
+    	
         for (int i = 0; i < Carte.NB_CARTES; i++){
             JeuDeCarte[i] = new Carte();
         }
@@ -46,17 +48,17 @@ public class Main {
     public static Carte tirerUneCarte(Carte[] JeuDeCarte){
 
         int temp = (int) (Math.random() * Carte.NB_CARTES);
-        while (JeuDeCarte[temp].getEstPioch√©e()){
+        while (JeuDeCarte[temp].getEstPiochÈe()){
             temp = (int) (Math.random() * Carte.NB_CARTES);
         }
-        JeuDeCarte[temp].setEstPioch√©e(true);
+        JeuDeCarte[temp].setEstPiochÈe(true);
         return JeuDeCarte[temp];
     }
 
     public static void afficherMur(Case[][] Mur){
         for (int j = 0; j < Case.y_MAX; j++){
             for (int i = 0; i < Case.x_MAX; i++){
-                System.out.print(Mur[i][(Case.y_MAX-1)-j].getValue()+"  ");
+                System.out.print(Mur[i][(Case.y_MAX-1)-j].getValeur()+"  ");
             }
             System.out.println();
         }
@@ -70,13 +72,13 @@ public class Main {
         }
         for (int i = 0; i < Case.x_MAX; i++) {
             char tempchar = (char) (i + '0');
-            Mur[i][0].setValue(tempchar);
+            Mur[i][0].setValeur(tempchar);
         }
         for (int i = 0; i < Case.y_MAX; i++){
             int tempint = i;
             char tempchar = (char) (tempint + '0');
-            Mur[0][i].setValue(tempchar);
+            Mur[0][i].setValeur(tempchar);
         }
-        Mur[0][0].setValue(' ');
+        Mur[0][0].setValeur(' ');
     }
 }

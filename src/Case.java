@@ -1,8 +1,6 @@
 public class Case {
-    public static int x_MAX = 6;
-    public static int y_MAX = 15;
 
-    private char valeur;
+    char valeur;
     private boolean EstOccupée;
 
     public Case(){
@@ -10,19 +8,11 @@ public class Case {
         EstOccupée = false;
     }
 
-    public char getValeur() {
-        return valeur;
-    }
-
     public boolean EstOccupée() {
         return EstOccupée;
     }
-
-    public void setValeur(char pCase) {
-        valeur = pCase;
-    }
-
-    public void setEstOccupée(boolean pEstOccupée) {
-        EstOccupée = pEstOccupée;
+    
+    public String toString() {
+    	return this.valeur + "  ";
     }
 }

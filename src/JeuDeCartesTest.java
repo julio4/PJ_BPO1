@@ -7,9 +7,7 @@ class JeuDeCartesTest {
 	@Test
 	void test_init() {
 		JeuDeCartes jdc = new JeuDeCartes();
-		for(Carte c : jdc.jdc) {
-			System.out.println(c.typeCarte);
-		}
+		assert(true); //Non implémentée
 	}
 
 }

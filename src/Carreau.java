@@ -4,9 +4,9 @@ public class Carreau {
     private Position pos;
     private boolean EstPosée;
 
-    public Carreau(){
-        lettre = ' ';
-        pos = new Position();
+    public Carreau(char lettre, int x, int y){
+        this.lettre = lettre;
+        pos = new Position(x, y);
         EstPosée = false;
     }
 }

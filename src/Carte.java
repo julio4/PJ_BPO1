@@ -1,8 +1,8 @@
 public class Carte{
 
-    private String type;
+    private Type type;
     
-    public Carte(String type){
+    public Carte(Type type){
         this.type = type;
     }
 

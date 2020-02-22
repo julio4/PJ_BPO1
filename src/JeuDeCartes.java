@@ -13,15 +13,15 @@ public class JeuDeCartes {
 		
         for(int i = 0; i < NB_CARTES; ++i) {
         	if(i < 9)
-        		this.pile.add(new Carte("Bleu"));
+        		this.pile.add(new Carte(Type.BLEU));
 	        	else if(i < 18)
-	        		this.pile.add(new Carte("Rouge"));
+	        		this.pile.add(new Carte(Type.ROUGE));
 		        	else if(i < 23)
-		        		this.pile.add(new Carte("Taille 1"));
+		        		this.pile.add(new Carte(Type.T1));
 			        	else if(i < 28)
-			        		this.pile.add(new Carte("Taille 2"));
+			        		this.pile.add(new Carte(Type.T2));
 				        	else
-				        		this.pile.add(new Carte("Taille 3"));
+				        		this.pile.add(new Carte(Type.T3));
         }
 
         //Mélange du jeu de cartes

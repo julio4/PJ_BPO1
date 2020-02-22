@@ -34,4 +34,9 @@ public class JeuDeCartes {
         }
 	}
 	
+	public Type tirer() {
+		CartesRestantes--;
+		System.out.println(pile.get(CartesRestantes));
+		return pile.get(CartesRestantes).lire();
+	}
 }

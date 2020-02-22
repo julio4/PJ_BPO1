@@ -1,16 +1,14 @@
-import JeuDeCarreaux.Type;
+import java.util.ArrayList;
 
 public class Jeux {
-	private static Mur mur;
-	private static JeuDeCartes pile;
-	private static JeuDeCarreaux[] jdc;
+	private Mur mur;
+	private JeuDeCartes pile;
+	private JeuDeCarreaux jdc;
 	
 	public Jeux() {
 		mur = new Mur();
     	pile = new JeuDeCartes();
-    	jdc[0] = new JeuDeCarreaux(Type.NEUTRE);
-    	jdc[1] = new JeuDeCarreaux(Type.BLEU);
-    	jdc[3] = new JeuDeCarreaux(Type.ROUGE);
+    	jdc= new JeuDeCarreaux();
 	}
 	
     public static void main(String[] args) {
@@ -26,5 +24,6 @@ public class Jeux {
 
 	private void jouerTour() {
 		mur.afficher();
+		jdc.afficher(pile.tirer());
 	}
 }

@@ -6,7 +6,7 @@ public class Piece {
 
     public Piece(){
         lettre = ' ';
-        position = new Position();
+        pos = new Position();
         EstPosée = false;
     }
 }

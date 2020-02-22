@@ -1,10 +1,10 @@
 public class Case {
 
-    char valeur;
+    String valeur;
     private boolean EstOccupée;
 
     public Case(){
-        valeur = ' ';
+        valeur = " ";
         EstOccupée = false;
     }
 
@@ -13,6 +13,9 @@ public class Case {
     }
     
     public String toString() {
-    	return this.valeur + "  ";
+    	if (this.valeur.length() > 1) {
+    		return this.valeur + " ";
+    	}
+    	return " " + this.valeur + " ";
     }
 }

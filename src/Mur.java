@@ -1,37 +1,60 @@
+import java.util.ArrayList;
+import java.util.Random;
+
 
 public class Mur {
-	private static int x_MAX = 6;
-    private static int y_MAX = 16;
-    private int y_top;
-    private Case[][] grille;
+	private final int LARGEUR = 5;
+    private ArrayList<char[]> grille;
     
     public Mur() {
-    	this.grille = new Case[x_MAX][y_MAX];
-    	y_top = 2;
+    	this.grille = new ArrayList<char[]>();
     	
-        for (int i = 0; i < x_MAX; ++i){
-            for (int j = 0; j < y_MAX; ++j){
-                this.grille[i][j] = new Case();
-            }
-        }
-        
-        //NUMEROTATION GRILLE
-        
-        this.grille[0][0].valeur = " ";
-        for (int i = 1; i < x_MAX; i++) {
-            this.grille[i][0].valeur = Integer.toString(i);
-        }
-        for (int i = 1; i <= y_top; i++){
-            this.grille[0][i].valeur = Integer.toString(i);
-        }
+    	
+    	Random r = new Random();
+    	boolean x = r.nextBoolean();
+    	boolean y = r.nextBoolean();
+    	if(x) {
+    		Carreau neutre = new Carreau('x', 3, 1);
+    		if(y) {
+    			poser(neutre, 1, 1);
+    		}
+    		else {
+    			poser(neutre, 3, 1);
+    		}
+    	}
+    	else {
+    		Carreau neutre = new Carreau('x', 1, 3);
+    		if(y) {
+    			poser(neutre, 1, 1);
+    		}
+    		else {
+    			poser(neutre, 5, 1);
+    		}
+    	}
+    	
     }
     
-    public void afficher() {
-    	for(int j = y_top; j >= 0; --j) {
-	    	for (int i = 0; i < x_MAX; ++i){
-	    		System.out.print(this.grille[i][j]);
-	    	}
-	    	System.out.println();
+    public void poser(Carreau c, int x, int y) {
+    	for(int i = 0; i < c.getHauteur(); ++i) {
+    		if(grille.get(y - 1)[x] == ' ' || grille.size() == 0 ) {
+    			char[] ligne = {' ', ' ', ' ', ' ', ' '};
+    		}
     	}
+    }
+    
+    public String toString() {
+    	StringBuilder sb = new StringBuilder();
+    	for(int i = grille.size(); i > 0; --i) {
+    		if(i < 10)
+    			sb.append(i + " ");
+    		else
+    			sb.append(i);
+    		for(int j = 0; j < LARGEUR; ++j) {
+    			sb.append(" " + grille.get(i - 1)[j]);
+    		}
+    		sb.append("\n");
+    	}
+    	sb.append("   1 2 3 4 5");
+    	return sb.toString();
     }
 }

@@ -5,6 +5,7 @@ public class JeuDeCarreaux {
 	private ArrayList<Carreau> jdc;
 	
 	public JeuDeCarreaux() {
+		jdc = new ArrayList<>();
 		jdc.add(new Carreau('x', 1, 3));
 		jdc.add(new Carreau('a', 1, 1));
 		jdc.add(new Carreau('b', 1, 2));

@@ -3,40 +3,47 @@ import java.util.Random;
 
 public class JeuDeCartes {
 	
-	private static int NB_CARTES = 33;
-	private ArrayList<Carte> pile;
+	private final int NB_CARTES = 33;
+	private ArrayList<Type> pile;
 	int CartesRestantes;
 	
 	public JeuDeCartes() {
-		this.pile = new ArrayList<Carte>();
+		this.pile = new ArrayList<Type>();
 		CartesRestantes = NB_CARTES;
-		
-        for(int i = 0; i < NB_CARTES; ++i) {
-        	if(i < 9)
-        		this.pile.add(new Carte(Type.BLEU));
-	        	else if(i < 18)
-	        		this.pile.add(new Carte(Type.ROUGE));
-		        	else if(i < 23)
-		        		this.pile.add(new Carte(Type.T1));
-			        	else if(i < 28)
-			        		this.pile.add(new Carte(Type.T2));
-				        	else
-				        		this.pile.add(new Carte(Type.T3));
+
+		//Ajout des cartes de différents types
+        for(int i = 0; i < 9; ++i) {
+        	this.pile.add(Type.BLEU);
+        	this.pile.add(Type.ROUGE);
+        }
+        for(int i = 0; i < 5; ++i) {
+        	this.pile.add(Type.T1);
+    		this.pile.add(Type.T2);
+        	this.pile.add(Type.T3);
         }
 
         //Mélange du jeu de cartes
         Random r = new Random();
         for(int i = 0; i < NB_CARTES - 1; ++i) {
         	int b = i + r.nextInt(NB_CARTES - 1 - i);
-        	Carte temp = this.pile.get(i);
+        	Type temp = this.pile.get(i);
         	this.pile.set(i, this.pile.get(b));
         	this.pile.set(b, temp);
         }
 	}
 	
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for(int i = 0; i < pile.size() - 1; ++i) {
+			sb.append(pile.get(i) + "\n");
+		}
+		return sb.toString();
+	}
+	/*
 	public Type tirer() {
 		CartesRestantes--;
 		System.out.println(pile.get(CartesRestantes));
 		return pile.get(CartesRestantes).lire();
 	}
+	*/
 }

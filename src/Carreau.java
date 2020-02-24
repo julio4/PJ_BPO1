@@ -1,12 +1,18 @@
 public class Carreau {
 
     private char lettre;
-    private Position pos;
-    private boolean EstPosée;
+    private int hauteur;
+    private int largeur;
+    //private boolean EstPosée;
 
     public Carreau(char lettre, int x, int y){
         this.lettre = lettre;
-        pos = new Position(x, y);
-        EstPosée = false;
+        this.largeur = x;
+        this.hauteur = y;
+        //EstPosée = false;
+    }
+    
+    public int getHauteur() {
+    	return this.hauteur;
     }
 }

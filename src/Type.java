@@ -6,6 +6,9 @@ public enum Type {
 	T2,
 	T3;
 
+	/**
+	 * Permet l'affichage des instructions des cartes selon leurs types
+	 */
 	public String toString() {
 		switch(this) {
 		case ROUGE:

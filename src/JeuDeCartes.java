@@ -1,14 +1,14 @@
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.Collections;
+import java.util.Stack;
 
 public class JeuDeCartes {
 	
-	private final int NB_CARTES = 33;
-	private ArrayList<Type> pile;
+	private static final int NB_CARTES = 33;
+	private Stack<Type> pile;
 	int CartesRestantes;
 	
 	public JeuDeCartes() {
-		this.pile = new ArrayList<Type>();
+		this.pile = new Stack<Type>();
 		CartesRestantes = NB_CARTES;
 
 		//Ajout des cartes de différents types
@@ -23,15 +23,12 @@ public class JeuDeCartes {
         }
 
         //Mélange du jeu de cartes
-        Random r = new Random();
-        for(int i = 0; i < NB_CARTES - 1; ++i) {
-        	int b = i + r.nextInt(NB_CARTES - 1 - i);
-        	Type temp = this.pile.get(i);
-        	this.pile.set(i, this.pile.get(b));
-        	this.pile.set(b, temp);
-        }
+        Collections.shuffle(pile);
 	}
 	
+	/**
+	 * Permet d'afficher le jeu de carte
+	 */
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		for(int i = 0; i < pile.size() - 1; ++i) {
@@ -39,11 +36,15 @@ public class JeuDeCartes {
 		}
 		return sb.toString();
 	}
-	/*
+	
+	/**
+	 * Tire une carte et renvoie son type
+	 * @return
+	 */
 	public Type tirer() {
+		assert(CartesRestantes > 0);
 		CartesRestantes--;
-		System.out.println(pile.get(CartesRestantes));
-		return pile.get(CartesRestantes).lire();
+		return pile.pop();
 	}
-	*/
+	
 }

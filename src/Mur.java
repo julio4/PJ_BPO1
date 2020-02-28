@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 
@@ -13,35 +14,50 @@ public class Mur {
     	Random r = new Random();
     	boolean x = r.nextBoolean();
     	boolean y = r.nextBoolean();
-    	if(x) {
-    		Carreau neutre = new Carreau('x', 3, 1);
-    		if(y) {
-    			poser(neutre, 1, 1);
-    		}
-    		else {
-    			poser(neutre, 3, 1);
-    		}
-    	}
-    	else {
-    		Carreau neutre = new Carreau('x', 1, 3);
-    		if(y) {
-    			poser(neutre, 1, 1);
-    		}
-    		else {
-    			poser(neutre, 5, 1);
-    		}
-    	}
+		Carreau neutre = new Carreau(x);
+		if(x) {
+			if(y) {
+				poser(neutre, 1, 1);
+			}
+			else {
+				poser(neutre, 5, 1);
+			}
+		}
+		else {
+			if(y) {
+				poser(neutre, 1, 1);
+			}
+			else {
+				poser(neutre, 3, 1);
+			}
+		}
     	
     }
     
+    /**
+     * Pose le Carreau dans la grille aux coordonées validées
+     * @param c (Carreau): le carreau à poser
+     * @param x (int): coordonée x où placer le carreau(le plus à gauche)
+     * @param y (int): coordonée y où placer le carreau(le plus en bas)
+     */
     public void poser(Carreau c, int x, int y) {
-    	for(int i = 0; i < c.getHauteur(); ++i) {
-    		if(grille.get(y - 1)[x] == ' ' || grille.size() == 0 ) {
-    			char[] ligne = {' ', ' ', ' ', ' ', ' '};
+    	
+    	//valider(largeur, hauteur, x, y) ?
+		while(grille.size() - y < c.getHauteur()) {
+			char[] ligne = new char[LARGEUR];
+			Arrays.fill(ligne, ' ');
+			grille.add(ligne);
+		}
+    	for(int i = x; i < x + c.getLargeur(); ++i) {
+    		for(int j = y; j < y + c.getHauteur(); ++j) {
+    		grille.get(j - 1)[i - 1] = c.getLettre();
     		}
     	}
     }
     
+    /**
+     * Permet d'afficher la grille de jeu de bas en haut
+     */
     public String toString() {
     	StringBuilder sb = new StringBuilder();
     	for(int i = grille.size(); i > 0; --i) {

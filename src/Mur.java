@@ -9,7 +9,7 @@ public class Mur {
     private int niveau;
     
     public Mur() {
-    	this.grille = new ArrayList<char[]>();
+    	this.grille = new ArrayList<>();
     	this.niveau = 1;
     }
     
@@ -33,7 +33,6 @@ public class Mur {
      * @param y (int): coordonée y où placer le carreau(le plus en bas)
      */
     public void poser(Carreau c, int y, int x) {
-    	
 		while(grille.size() - y < c.getHauteur()) {
 			char[] ligne = new char[LARGEUR];
 			Arrays.fill(ligne, ' ');
@@ -44,6 +43,11 @@ public class Mur {
     		grille.get(j - 1)[i - 1] = c.getLettre();
     		}
     	}
+    }
+    
+    public void poser(char lettre, int y, int x) {
+    	Carreau c = new Carreau(lettre);
+    	poser(c, y, x);
     }
     
     /**
@@ -73,11 +77,10 @@ public class Mur {
 		}
 		
 		//parcours des lignes en partant du bas
-		Character libre = ' ';
 		for(int i = y; i < c.getHauteur(); ++i) {
 			//parcours des colonnes en partant de la gauche
 			for(int j = x; j < c.getLargeur(); ++j) {
-				if( !libre.equals(this.grille.get(i)[j])) {
+				if( this.grille.get(i)[j] != ' ') {
 					return false;
 				}
 			}

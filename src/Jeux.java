@@ -48,6 +48,8 @@ public class Jeux {
 					break;
 				}
 				else {
+					//TANT QUE SAISIE INVALIDE
+					
 					//Initialisations des variables d'entrées
 					char lettre = input.charAt(0);
 					int x = 0;
@@ -58,9 +60,9 @@ public class Jeux {
 							x = sc.nextInt();
 
 							if(listeCarreaux.contient(lettre)) {
-								if(//Valider coordonnée
-										true) {
-
+								if(mur.verifier(lettre, y, x)) {
+									mur.poser(lettre, y, x);
+									jdc.enlever(lettre);
 								}
 								else {
 									System.out.println("Erreur! Impossible de poser le carreau " + lettre + " au positions indiquées.\n");
@@ -72,6 +74,8 @@ public class Jeux {
 						}
 
 					}
+					
+					//FIN TANT QUE
 				}
 			}
 			else {

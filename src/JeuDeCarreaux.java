@@ -67,4 +67,13 @@ public class JeuDeCarreaux {
 		}
 		return false;
 	}
+	
+	public void enlever(char lettre) {
+		for(int i = 0; i < jdc.size(); ++i) {
+			if(lettre == jdc.get(i).getLettre()) {
+				jdc.remove(i);
+				break;
+			}
+		}
+	}
 }

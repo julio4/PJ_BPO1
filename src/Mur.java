@@ -6,32 +6,24 @@ import java.util.Random;
 public class Mur {
 	private final int LARGEUR = 5;
     private ArrayList<char[]> grille;
+    private int niveau;
     
     public Mur() {
     	this.grille = new ArrayList<char[]>();
-    	
-    	
+    	this.niveau = 1;
+    }
+    
+    public void poserNeutre() {
     	Random r = new Random();
     	boolean x = r.nextBoolean();
     	boolean y = r.nextBoolean();
 		Carreau neutre = new Carreau(x);
-		if(x) {
-			if(y) {
-				poser(neutre, 1, 1);
-			}
-			else {
-				poser(neutre, 5, 1);
-			}
+		if(y) {
+			poser(neutre, niveau, LARGEUR + 1 - neutre.getLargeur());
 		}
 		else {
-			if(y) {
-				poser(neutre, 1, 1);
-			}
-			else {
-				poser(neutre, 3, 1);
-			}
+			poser(neutre, niveau, 1);
 		}
-    	
     }
     
     /**
@@ -40,9 +32,8 @@ public class Mur {
      * @param x (int): coordonée x où placer le carreau(le plus à gauche)
      * @param y (int): coordonée y où placer le carreau(le plus en bas)
      */
-    public void poser(Carreau c, int x, int y) {
+    public void poser(Carreau c, int y, int x) {
     	
-    	//valider(largeur, hauteur, x, y) ?
 		while(grille.size() - y < c.getHauteur()) {
 			char[] ligne = new char[LARGEUR];
 			Arrays.fill(ligne, ' ');
@@ -73,4 +64,24 @@ public class Mur {
     	sb.append("   1 2 3 4 5");
     	return sb.toString();
     }
+
+	public boolean verifier(char lettre, int y, int x) {
+		Carreau c = new Carreau(lettre);
+		
+		if(x + c.getLargeur() - 1 > LARGEUR || y < niveau || x < 1) {
+			return false;
+		}
+		
+		//parcours des lignes en partant du bas
+		Character libre = ' ';
+		for(int i = y; i < c.getHauteur(); ++i) {
+			//parcours des colonnes en partant de la gauche
+			for(int j = x; j < c.getLargeur(); ++j) {
+				if( !libre.equals(this.grille.get(i)[j])) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
 }

@@ -80,17 +80,6 @@ public class Carreau {
 		return false;
     }
     
-    /*
-    public String toString() {
-    	StringBuilder sb = new StringBuilder();
-    	for (int i = 0; i < this.hauteur; ++i) {
-    		for (int j = 0; j < this.largeur; ++j) {
-    			sb.append(" " + this.lettre);
-    		}
-    	}
-    	return sb.toString();
-    }
-    */
     
     public int getHauteur() {
     	return this.hauteur;

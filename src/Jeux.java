@@ -1,93 +1,115 @@
+import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 
+/**
+ * Jeux.java Permet de jouer aux jeux "Team Up"
+ * 
+ * @author Jules Doumèche, Martin Gwénolé
+ */
 public class Jeux {
 
-	private static boolean finie() {
-		return false;
-	}
-	/**
-	 * Fonction main permettant l'exécution du jeux
+	/*
+	 * Vérifie si le jeux est fini
+	 * 
+	 * @return true si le jeux est fini, false sinon
 	 */
-	public static void main(String[] args) {
-
+	private static boolean estFini(boolean status, JeuDeCartes pile, JeuDeCarreaux jdc) {
+		return jdc.estVide() || pile.estVide() || !status;
+	}
+	
+	/**
+	 * Fonction principale (main) permettant l'exécution d'une partie du jeux
+	 * 
+	 * @throws NoSuchAlgorithmException 
+	 */
+	public static void main(String[] args) throws NoSuchAlgorithmException {
+		
 		JeuDeCartes pile = new JeuDeCartes();
 		JeuDeCarreaux jdc = new JeuDeCarreaux();
 		Scanner sc = new Scanner(System.in);
-		Mur mur = new Mur();
-		int cartesPassées = 0;
-		
-		mur.poserNeutre();
+		Mur mur = new Mur(true);
+		int cartesEc = 0;
+		boolean status = true;
 
-		while(!finie()) {
+		while(!estFini(status, pile, jdc)) {
 
-			//Affichage du mur
-			System.out.println(mur);
-
-			//Tirer et afficher l'instruction de la carte
+			//Tirer la carte
 			Type carte = pile.tirer();
-			System.out.println(carte);
 
 			//Liste des carreaux possible
 			JeuDeCarreaux listeCarreaux = jdc.créerListe(carte);
 			if(!listeCarreaux.estVide()) {
-				//Affichage de la liste de Carreaux;
-				System.out.println(listeCarreaux);
 
 				//Affichage des instructions d'entrées et initialisation
-				System.out.println("Veuillez entrer la lettre correspondant au carreau choisi suivit du numéro de la ligne(y) et de la colonne(x).\n"
-						+ "Par exemple 'h 2 1' pour poser le carreau h à la 2ème ligne et à la première colonne.\n"
-						+ "Vous pouvez de plus écrire 'next' pour écarter la carte et passer au prochain tour ou 'stop' pour mettre fin à la partie.\n");
-				String input = sc.next();
-
-
-				if(input.toLowerCase().equals("next")) {
-					++cartesPassées;
-					continue;
-				}
-				else if(input.toLowerCase().equals("stop")) {
-					break;
-				}
-				else {
-					//TANT QUE SAISIE INVALIDE
+				boolean saisieValide = false;
+				while(!saisieValide) {
 					
-					//Initialisations des variables d'entrées
-					char lettre = input.charAt(0);
-					int x = 0;
-					int y = 0;
-					if(sc.hasNextInt()) {
-						y = sc.nextInt();
-						if(sc.hasNextInt()) {
-							x = sc.nextInt();
+					//Affichage du mur et de l'instruction de la carte tirée
+					System.out.println(mur);
+					System.out.println(carte);
+					
+					//Affichage de la liste de Carreaux
+					System.out.println(listeCarreaux);
+					
+					System.out.println("Veuillez entrer la lettre correspondant au carreau choisi suivit du numéro de la ligne(y) et de la colonne(x).\n"
+							+ "Par exemple 'h 2 1' pour poser le carreau h à la 2ème ligne et à la première colonne.\n"
+							+ "Vous pouvez de plus écrire 'next' pour écarter la carte et passer au prochain tour ou 'stop' pour mettre fin à la partie.\n");
+					String input = sc.next();
 
-							if(listeCarreaux.contient(lettre)) {
-								if(mur.verifier(lettre, y, x)) {
-									mur.poser(lettre, y, x);
-									jdc.enlever(lettre);
+
+					if(input.equalsIgnoreCase("next")) {
+						++cartesEc;
+						break;
+					}
+					else if(input.equalsIgnoreCase("stop")) {
+						status = false;
+						break;
+					}
+					else {
+
+						//Initialisations des variables d'entrées
+						char lettre = input.charAt(0);
+						int x = 0;
+						int y = 0;
+						if(sc.hasNextInt()) {
+							y = sc.nextInt();
+							if(sc.hasNextInt()) {
+								x = sc.nextInt();
+								if(listeCarreaux.contient(lettre)) {
+									String codeInput = mur.verifier(lettre, y, x);
+									if(codeInput.equals("valide")) {
+										mur.poser(lettre, y, x);
+										jdc.enlever(lettre);
+										saisieValide = true;
+									}
+									else {
+										System.out.println("Erreur! Impossible de poser le carreau " + lettre 
+												+ " au positions " + y + " " + x +"\n Erreur: " + codeInput + ".\n");
+									}
 								}
 								else {
-									System.out.println("Erreur! Impossible de poser le carreau " + lettre + " au positions indiquées.\n");
+									System.out.println("Erreur! Veuillez entrez un carreau affichée dans la liste précedente.\n");
 								}
 							}
-							else {
-								System.out.println("Erreur! Veuillez entrez un carreau affichée dans la liste précedente.\n");
-							}
 						}
-
 					}
-					
-					//FIN TANT QUE
 				}
 			}
 			else {
-				++cartesPassées;
+				++cartesEc;
 				System.out.println("Aucun carreau restant ne correspond à la carte tirée");
 				//TOUR SUIVANT
 			}
 		}
 		//Fin de la partie
-		
+		int points = mur.niveauComplets() * 5 - jdc.carreauxRestants() - cartesEc;
+		if (points < 0) {
+			points = 0;
+		}
+		System.out.println(points + " points (" + mur.niveauComplets() + " niveaux complets, "
+				+ jdc.carreauxRestants() + " carreaux non posés, " + cartesEc +" cartes écartées)");
 		//CALCUL SCORE
-		
+
 		sc.close();
 	}
 }

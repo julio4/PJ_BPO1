@@ -1,4 +1,3 @@
-
 public enum Type {
 	ROUGE,
 	BLEU,
@@ -9,6 +8,7 @@ public enum Type {
 	/**
 	 * Permet l'affichage des instructions des cartes selon leurs types
 	 */
+	@Override
 	public String toString() {
 		switch(this) {
 		case ROUGE:

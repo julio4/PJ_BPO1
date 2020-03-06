@@ -1,22 +1,38 @@
 import java.util.ArrayList;
 
+/**
+ * JeuDeCarreaux.java Définit une liste de Carreau
+ * 
+ * @author Jules Doumèche, Martin Gwénolé
+ */
 public class JeuDeCarreaux {
+
 	private static final int TMAX = 3;
 	private ArrayList<Carreau> jdc;
-	
+
+	/*
+	 * Constructeur: JeuDeCarreaux
+	 * 
+	 * @return le jeu de carreaux initialisé avec les 18 carreaux bleus et rouges
+	 */
 	public JeuDeCarreaux() {
 		jdc = new ArrayList<>();
-		
-		for(char i = 'a'; i <= ( 'a' + TMAX*TMAX ); ++i) {
+		for(char i = 'a'; i < ( 'a' + TMAX*TMAX ); ++i) {
 			jdc.add(new Carreau(i));
 			jdc.add(new Carreau(Character.toUpperCase(i)));
 		}
 	}
-	
+
+	/*
+	 * Créer et initialise un jeu de carreaux contenant tout les carreaux restants du type indiqué
+	 * 
+	 * @param type : le type du jeu de carreaux à créer
+	 * @return le jeu de carreaux crée
+	 */
 	public JeuDeCarreaux créerListe(Type type) {
 		JeuDeCarreaux retour = new JeuDeCarreaux();
 		retour.jdc = new ArrayList<>();
-		
+
 		for(int i = 0; i < this.jdc.size() - 1; ++i) {
 			if(this.jdc.get(i).est(type)) {
 				retour.jdc.add(this.jdc.get(i));
@@ -24,21 +40,77 @@ public class JeuDeCarreaux {
 		}
 		return retour;
 	}
-	
-	public String toString(//ArrayList<Carreau> afficher
-			) {
-		StringBuilder sb = new StringBuilder();
-		
-		//Recupère y max
-		int y_max = 0;
-		for(int i = 0; i < jdc.size() - 1; ++i) {
-			if(jdc.get(i).getHauteur() > y_max) {
-				y_max = jdc.get(i).getHauteur();
+
+	/*
+	 * Vérifie si tout les carreaux ont été posés
+	 * 
+	 * @return true s'il ne reste plus aucun carreaux, false sinon
+	 */
+	public boolean estVide() {
+		return this.jdc.isEmpty();
+	}
+
+	/*
+	 * Vérifie si le jeu de carreau contient le carreaux correspondant à la lettre indiquée
+	 * 
+	 * @param lettre : la lettre correspondant au carreau à vérifier
+	 * @return true si le jeu de carreaux contient le carreaux de la lettre indiqué, false sinon
+	 */
+	public boolean contient(char lettre) {
+		for(int i = 0; i < jdc.size(); ++i) {
+			if(lettre == jdc.get(i).getLettre()) {
+				return true;
 			}
 		}
-		
+		return false;
+	}
+
+	/*
+	 * Enlève du jeu de carreaux le carreaux correspondant à la lettre indiquée
+	 * 
+	 * @param lettre : la lettre correspondant au carreau à enlever
+	 * @return true si la suppression a été effectuée, false sinon
+	 * @see contient(char lettre) pour vérifier la présence du Carreaux avant de l'enlever
+	 */
+	public boolean enlever(char lettre) {
+		if(this.contient(lettre)) {
+			for(int i = 0; i < jdc.size(); ++i) {
+				if(lettre == jdc.get(i).getLettre()) {
+					jdc.remove(i);
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	/*
+	 * Retourne le nombre de carreaux non posés
+	 * 
+	 * @return nombres de carreaux non posés
+	 */
+	public int carreauxRestants() {
+		return jdc.size();
+	}
+
+	/*
+	 * Obtient l'affichage des carreaux dans l'ordre alphabétique et des carreaux bleus à rouges
+	 * 
+	 * @return la chaîne avec les carreaux côte à côte sur une ligne
+	 */
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		//Récupère y max
+		int yMax = 0;
+		for(int i = 0; i < jdc.size() - 1; ++i) {
+			if(jdc.get(i).getHauteur() > yMax) {
+				yMax = jdc.get(i).getHauteur();
+			}
+		}
+
 		//Affiche les carreaux dans l'ordre
-		for(int i = y_max; i > 0; --i) {
+		for(int i = yMax; i > 0; --i) {
 			for(int j = 0; j < jdc.size(); ++j) {
 				for(int h = 0; h < jdc.get(j).getLargeur(); ++h) {
 					if(jdc.get(j).getHauteur() < i) {
@@ -53,27 +125,5 @@ public class JeuDeCarreaux {
 			sb.append("\n");
 		}
 		return sb.toString();
-	}
-
-	public boolean estVide() {
-		return this.jdc.isEmpty();
-	}
-
-	public boolean contient(char lettre) {
-		for(int i = 0; i < jdc.size(); ++i) {
-			if(lettre == jdc.get(i).getLettre()) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	public void enlever(char lettre) {
-		for(int i = 0; i < jdc.size(); ++i) {
-			if(lettre == jdc.get(i).getLettre()) {
-				jdc.remove(i);
-				break;
-			}
-		}
 	}
 }

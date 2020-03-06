@@ -1,14 +1,24 @@
 import java.util.Collections;
 import java.util.Stack;
 
+/**
+ * JeuDeCartes.java Définit une pile de 33 Cartes avec une instruction spécifiée par Type
+ * 
+ * @author Jules Doumèche, Martin Gwénolé
+ */
 public class JeuDeCartes {
 	
 	private static final int NB_CARTES = 33;
 	private Stack<Type> pile;
 	int CartesRestantes;
 	
+	/*
+	 * Constructeur: JeuDeCartes
+	 * 
+	 * @return JeuDeCartes de 33 cartes, 9 Rouges, 9 bleues, 5 Taille 1, 5 Tailles 2 et 5 Tailles 3
+	 */
 	public JeuDeCartes() {
-		this.pile = new Stack<Type>();
+		this.pile = new Stack<>();
 		CartesRestantes = NB_CARTES;
 
 		//Ajout des cartes de différents types
@@ -27,19 +37,10 @@ public class JeuDeCartes {
 	}
 	
 	/**
-	 * Permet d'afficher le jeu de carte
-	 */
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		for(int i = 0; i < pile.size() - 1; ++i) {
-			sb.append(pile.get(i) + "\n");
-		}
-		return sb.toString();
-	}
-	
-	/**
 	 * Tire une carte et renvoie son type
-	 * @return
+	 * 
+	 * @return le type de la carte permettant de connaître l'instruction de la carte
+	 * @see Type.java
 	 */
 	public Type tirer() {
 		assert(CartesRestantes > 0);
@@ -47,4 +48,12 @@ public class JeuDeCartes {
 		return pile.pop();
 	}
 	
+	/*
+	 * Vérifie si toutes les cartes ont été tirées
+	 * 
+	 * @return true s'il ne reste plus aucune cartes, false sinon
+	 */
+	public boolean estVide() {
+		return pile.isEmpty();
+	}
 }

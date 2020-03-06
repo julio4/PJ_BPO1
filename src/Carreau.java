@@ -1,12 +1,24 @@
+/**
+ * Carreau.java Définit un carreau, sa lettre et ses dimensions.
+ * 
+ * @author Jules Doumèche, Martin Gwénolé
+ */
 public class Carreau {
 
     private char lettre;
     private int hauteur;
     private int largeur;
-    //private boolean EstPosée;
     
+    /*
+     * Constructeur: Carreau en fonction de sa lettre
+     * 
+     * @param l : la lettre correspondant
+     * @return Carreau
+     */
     public Carreau(char l){
-    	assert l >= 'a' || l <= 'i';
+    	if (Character.toLowerCase(l) < 'a' || Character.toLowerCase(l) > 'i') {
+    		throw new IllegalArgumentException("Lettre invalide: " + l);
+    	}
     	this.lettre = l;
     	l = Character.toLowerCase(l);
     	switch(l) {
@@ -50,7 +62,10 @@ public class Carreau {
     }
     
     /*
-     * Pour crée le Carreau neutre uniquement
+     * Constructeur : Carreau neutre en fonction de son orientation
+     * 
+     * @param estVert : orientation Vertical ou Horizontal
+     * @return Carreau neutre
      */
     public Carreau(boolean estVert) {
     	this.lettre = 'x';
@@ -63,7 +78,41 @@ public class Carreau {
     		this.largeur = 3;
     	}
     }
-    
+
+    /*
+     * Renvoie la lettre du carreau
+     * 
+     * @return lettre du carreau
+     */
+	public char getLettre() {
+		return this.lettre;
+	}
+	
+    /*
+     * Renvoie la hauteur du carreau
+     * 
+     * @return hauteur(y) du carreau
+     */
+    public int getHauteur() {
+    	return this.hauteur;
+    }
+
+    /*
+     * Renvoie la largeur du carreau
+     * 
+     * @return largeur(x) du carreau
+     */
+	public int getLargeur() {
+		return this.largeur;
+	}
+	
+    /*
+     * Permet de savoir si le carreau est du type indiqué
+     * 
+     * @param t : le type à tester
+     * @return true si le carreau est du type indiqué, false sinon
+     * @see Type.java
+     */
     public boolean est(Type t) {
     	switch(t) {
 		case BLEU:
@@ -79,17 +128,4 @@ public class Carreau {
 		}
 		return false;
     }
-    
-    
-    public int getHauteur() {
-    	return this.hauteur;
-    }
-
-	public char getLettre() {
-		return this.lettre;
-	}
-
-	public int getLargeur() {
-		return this.largeur;
-	}
 }

@@ -1,8 +1,6 @@
-import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
 
 /**
  * Mur.java Définit le mur sur lesquels les carreaux sont posés
@@ -107,111 +105,67 @@ public class Mur {
 	 * @param y : coordonée y du carreau(le plus en bas)
 	 * @return "Valide" si valide, sinon description de l'erreur
 	 * @see poser pour pouvoir poser le Carreau après vérification
+	 * @see fonctions de règles : rDépassement, rVide, rSuperposé, rCloné et rIsolé
 	 */
 	public String verifier(char lettre, int y, int x) {
 		Carreau c = new Carreau(lettre);
 
-		if(x + c.getLargeur() - 1 > LARGEUR || x < 1) {
-			return "Dépassement zone";
-		}
-		Character libre = ' ';
-		if( y > 1) {
-			for(int i = x; i < x + c.getLargeur(); ++i) {
-
-				if( libre.equals(this.grille.get(y - 2)[i - 1])) {
-					return "Carreau dans le vide";
-				}
-
-				/*
-				tests base clone inferieur
-				 */
-			}
-			char cTest = this.grille.get(y - 2)[x - 1];
-			if(cTest == this.grille.get(y - 2)[x + c.getLargeur() - 2]) {
-				if(cTest == 'x' && nx == c.getLargeur()) {
-					return "Base du carreau clonée";
-				}
-				else {
-					Carreau carInf = new Carreau(this.grille.get(y - 2)[x + c.getLargeur() - 2]);
-					if(carInf.getLargeur() == c.getLargeur()) {
-						return "Base du carreau clonée";
-					}
-				}
-			}
-		}
-
-		while(grille.size() - y < c.getHauteur()) {
-			char[] ligne = new char[LARGEUR];
-			Arrays.fill(ligne, LIBRE);
-			grille.add(ligne);
+		if(rDépassement(c, x)) {
+			return "Le carreau dépasse la zone";
 		}
 		
-		for(int j = y; j < y + c.getHauteur(); ++j) {
-			for(int i = x; i < x + c.getLargeur(); ++i) {
-
-				if( this.grille.get(j - 1)[i - 1] != LIBRE) {
-					while(grille.size() - y < c.getHauteur()) {
-						grille.remove(grille.size());
-					}
-					return "Carreau superposé";
-				}
-
-			}
+		if(rVide(c, y, x)) {
+			return "Le carreau repose sur une case vide";
+		}
+		
+		if(rSuperposé(c, y, x)) {
+			return "Le carreau est superposé à un autre";
+		}
+		
+		switch(rCloné(c, y, x)) {
+		case 0:
+			break;
+		case 1:
+			return "La base du carreau clone la face supérieur du carreau inférieur";
+		case 2:
+			return "La face droite du carreau clone la face gauche du carreau à droite";
+		case 3:
+			return "La face gauche du carreau clone la face droite du carreau à gauche";
+		default:
+			break;
 		}
 
-		if( x != LARGEUR ) {
-			char cTest = this.grille.get(y - 1)[x];
-			if(cTest == this.grille.get(y + c.getHauteur() - 2)[x]) {
-				if(cTest == 'x' && ny == c.getHauteur()) {
-					while(grille.size() - y < c.getHauteur()) {
-						grille.remove(grille.size());
-					}
-					return "Face droite du carreau clonée";
-				}
-				else {
-					Carreau carInf = new Carreau(this.grille.get(y + c.getHauteur() - 2)[x]);
-					if( carInf.getHauteur() == c.getHauteur()) {
-						while(grille.size() - y < c.getHauteur()) {
-							grille.remove(grille.size());
-						}
-						return "Face droite du carreau clonée";
-					}
-				}
-			}
+		if(rIsolé(c, y ,x)) {
+			return "Le carreau ne touche aucun autre carreau";
 		}
-		if ( x != 1 ) {
-			char cTest = this.grille.get(y - 1)[x - 2];
-			if(cTest == this.grille.get(y + c.getHauteur() - 2)[x - 2]) {
-				if(cTest == 'x' && ny == c.getHauteur()) {
-					while(grille.size() - y < c.getHauteur()) {
-						grille.remove(grille.size());
-					}
-					return "Face gauche du carreau clonée";
-				}
-				else {
-					Carreau carInf = new Carreau(this.grille.get(y + c.getHauteur() - 2)[x - 2]);
-					if( carInf.getHauteur() == c.getHauteur()) {
-						while(grille.size() - y < c.getHauteur()) {
-							grille.remove(grille.size());
-						}
-						return "Face gauche du carreau clonée";
-					}
-				}
-			}
-		}
-
-		if(y == 1 && (x == 1 || this.grille.get(y - 1)[x - 2] == LIBRE)
-				&& ( x == LARGEUR || this.grille.get(y - 1)[x + c.getLargeur() - 1] == LIBRE)) {
-			return "Carreau isolé";
-		}
-
+		
 		return "valide";
 	}
 	
+	/*
+	 * Vérifie si le carreau correspondant à la lettre indiquée peut-être poser aux coordonées spécifiées
+	 * (Pour test unitaires)
+	 * 
+	 * @param x : coordonée x du carreau(le plus à gauche)
+	 * @param y : coordonée y du carreau(le plus en bas)
+	 * @param lettre : la lettre correspondant au carreau à vérifier
+	 * @return true si valide, false sinon
+	 * @see poser pour pouvoir poser le Carreau après vérification
+	 * @see fonctions de règles : rDépassement, rVide, rSuperposé, rCloné et rIsolé
+	 */
+	public boolean verifier(int y, int x, char lettre) {
+		Carreau c = new Carreau(lettre);
+		return !(rDépassement(c, x) || rVide(c, y, x) 
+				|| rSuperposé(c, y, x) || rCloné(c, y, x) > 0 || rIsolé(c, y ,x));
+	}
+	
+	/*
+	 * Compte le nombre de niveau complétés
+	 * 
+	 * @return le nombre de niveau complets
+	 */
 	public int niveauComplets() {
-		
 		int i = grille.size() - 1;
-		
 		while(i >= 0) {
 			for(int j = 0; j < LARGEUR; ++j) {
 				if(grille.get(i)[j] == LIBRE) {
@@ -227,7 +181,9 @@ public class Mur {
 	}
 	
 	/**
-	 * Permet d'afficher la grille de jeu de bas en haut
+	 * Permet d'afficher le mur de bas en haut avec les numérotations
+	 * 
+	 * @return la chaîne de caractère correspondant à l'affichage du mur
 	 */
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
@@ -245,8 +201,147 @@ public class Mur {
 		for(int j = 1; j <= LARGEUR; ++j) {
 			sb.append(" " + j);
 		}
-
 		return sb.toString();
 	}
 	
+	/*
+	 * Vérifie si le carreau dépasse les bordures à l'abscisse x
+	 * 
+	 * @param c : le Carreau
+	 * @param x : l'abscisse
+	 * @return true si le carreau dépasse les bordures du mur, false sinon
+	 */
+	private boolean rDépassement(Carreau c, int x) {
+		return (x + c.getLargeur() - 1 > LARGEUR || x < 1);
+	}
+	
+	/*
+	 * Vérifie si le carreau ne repose pas entièrement sur des carreaux déjà posé aux positions x, y
+	 * 
+	 * @param c : le Carreau
+	 * @param y : l'ordonnée
+	 * @param x : l'abscisse
+	 * @return true si le carreau repose sur au moins une case vide, false sinon
+	 */
+	private boolean rVide(Carreau c, int y, int x) {
+		if( y > 1) {
+			for(int i = x; i < x + c.getLargeur(); ++i) {
+				if( this.grille.get(y - 2)[i - 1] == LIBRE) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	/*
+	 * Vérifie si le carreau est superposé à un autre carreau aux positions x, y
+	 * 
+	 * @param c : le Carreau
+	 * @param y : l'ordonnée
+	 * @param x : l'abscisse
+	 * @return true si le carreau superpose au moins une case pleine, false sinon
+	 */
+	private boolean rSuperposé(Carreau c, int y, int x) {
+		while(grille.size() - y < c.getHauteur()) {
+			char[] ligne = new char[LARGEUR];
+			Arrays.fill(ligne, LIBRE);
+			grille.add(ligne);
+		}
+		
+		for(int j = y; j < y + c.getHauteur(); ++j) {
+			for(int i = x; i < x + c.getLargeur(); ++i) {
+				if( this.grille.get(j - 1)[i - 1] != LIBRE) {
+					while(grille.size() - y < c.getHauteur()) {
+						grille.remove(grille.size());
+					}
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	/*
+	 * Vérifie si le carreau ne clone aucune faces adjacentes aux positions x, y
+	 * 
+	 * @param c : le Carreau
+	 * @param y : l'ordonnée
+	 * @param x : l'abscisse
+	 * @return 1 si la base du carreau est clonée, 2 si la face droite du carreau est clonée, 
+	 * 3 si la face gauche du carreau est clonée, 0 si aucune faces du carreau n'est clonées
+	 */
+	private int rCloné(Carreau c, int y, int x) {
+		if( y > 1) {
+			char cTest = this.grille.get(y - 2)[x - 1];
+			if(cTest == this.grille.get(y - 2)[x + c.getLargeur() - 2]) {
+				if(cTest == 'x' && nx == c.getLargeur()) {
+					return 1;
+				}
+				else {
+					Carreau carInf = new Carreau(this.grille.get(y - 2)[x + c.getLargeur() - 2]);
+					if(carInf.getLargeur() == c.getLargeur()) {
+						return 1;
+					}
+				}
+			}
+		}
+		if( x != LARGEUR ) {
+			char cTest = this.grille.get(y - 1)[x];
+			if(cTest == this.grille.get(y + c.getHauteur() - 2)[x]) {
+				if(cTest == 'x' && ny == c.getHauteur()) {
+					while(grille.size() - y < c.getHauteur()) {
+						grille.remove(grille.size());
+					}
+					return 2;
+				}
+				else {
+					Carreau carInf = new Carreau(this.grille.get(y + c.getHauteur() - 2)[x]);
+					if( carInf.getHauteur() == c.getHauteur()) {
+						while(grille.size() - y < c.getHauteur()) {
+							grille.remove(grille.size());
+						}
+						return 2;
+					}
+				}
+			}
+		}
+		if ( x != 1 ) {
+			char cTest = this.grille.get(y - 1)[x - 2];
+			if(cTest == this.grille.get(y + c.getHauteur() - 2)[x - 2]) {
+				if(cTest == 'x' && ny == c.getHauteur()) {
+					while(grille.size() - y < c.getHauteur()) {
+						grille.remove(grille.size());
+					}
+					return 3;
+				}
+				else {
+					Carreau carInf = new Carreau(this.grille.get(y + c.getHauteur() - 2)[x - 2]);
+					if( carInf.getHauteur() == c.getHauteur()) {
+						while(grille.size() - y < c.getHauteur()) {
+							grille.remove(grille.size());
+						}
+						return 3;
+					}
+				}
+			}
+		}
+		return 0;
+	}
+	
+	/*
+	 * Vérifie si le carreau ne touche aucune carreaux adjacents aux positions x, y
+	 * 
+	 * @param c : le Carreau
+	 * @param y : l'ordonnée
+	 * @param x : l'abscisse
+	 * @return true si le carreau est isolé et ne touche aucun carreaux, false sinon
+	 */
+	private boolean rIsolé(Carreau c, int y, int x) {
+		return (y == 1 
+				&& 
+				(x == 1 || this.grille.get(y - 1)[x - 2] == LIBRE)
+				&& 
+				( x == LARGEUR || this.grille.get(y - 1)[x + c.getLargeur() - 1] == LIBRE));
+	}
 }

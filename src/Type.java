@@ -1,3 +1,8 @@
+/**
+ * Type.java Définit les Types utilisées pour gérer les cartes et les carreaux
+ * 
+ * @author Jules Doumèche, Martin Gwénolé
+ */
 public enum Type {
 	ROUGE,
 	BLEU,
@@ -7,6 +12,8 @@ public enum Type {
 
 	/**
 	 * Permet l'affichage des instructions des cartes selon leurs types
+	 * 
+	 * @return l'instruction correspondant au type
 	 */
 	@Override
 	public String toString() {

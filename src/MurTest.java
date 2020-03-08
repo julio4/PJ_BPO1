@@ -14,7 +14,7 @@ class MurTest {
 		m2.poserNeutre();
 		int i = 0;
 		while(i < LARGEUR) {
-			m.
+			
 		}
 	}
 

@@ -16,11 +16,11 @@ public class Carreau {
      * @return Carreau
      */
     public Carreau(char l){
-    	/*
+    	
     	if (Character.toLowerCase(l) < 'a' || Character.toLowerCase(l) > 'i') {
     		throw new IllegalArgumentException("Lettre invalide: " + l);
     	}
-    	*/
+    	
     	this.lettre = l;
     	l = Character.toLowerCase(l);
     	switch(l) {

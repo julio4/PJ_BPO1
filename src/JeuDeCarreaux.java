@@ -33,7 +33,7 @@ public class JeuDeCarreaux {
 		JeuDeCarreaux retour = new JeuDeCarreaux();
 		retour.jdc = new ArrayList<>();
 
-		for(int i = 0; i < this.jdc.size() - 1; ++i) {
+		for(int i = 0; i < this.jdc.size(); ++i) {
 			if(this.jdc.get(i).est(type)) {
 				retour.jdc.add(this.jdc.get(i));
 			}
@@ -109,6 +109,7 @@ public class JeuDeCarreaux {
 			}
 		}
 
+		sb.append("\n");
 		//Affiche les carreaux dans l'ordre
 		for(int i = yMax; i > 0; --i) {
 			for(int j = 0; j < jdc.size(); ++j) {

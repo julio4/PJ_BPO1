@@ -187,6 +187,7 @@ public class Mur {
 	 */
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
+		sb.append("\n");
 		for(int i = grille.size(); i > 0; --i) {
 			if(i < 10)
 				sb.append(i + " ");
@@ -201,6 +202,7 @@ public class Mur {
 		for(int j = 1; j <= LARGEUR; ++j) {
 			sb.append(" " + j);
 		}
+		sb.append("\n");
 		return sb.toString();
 	}
 	

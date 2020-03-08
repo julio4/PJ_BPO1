@@ -6,7 +6,7 @@ import java.util.Scanner;
  * 
  * @author Jules Doumèche, Martin Gwénolé
  */
-public class Jeux {
+public class Jeu {
 
 	/*
 	 * Vérifie si le jeux est fini

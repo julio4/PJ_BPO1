@@ -80,7 +80,30 @@ public class Carreau {
     		this.largeur = 3;
     	}
     }
-
+	
+    /*
+     * Permet de savoir si le carreau est du type indiqué
+     * 
+     * @param t : le type à tester
+     * @return true si le carreau est du type indiqué, false sinon
+     * @see Type.java
+     */
+    public boolean est(Type t) {
+    	switch(t) {
+		case BLEU:
+			return Character.isLowerCase(this.lettre);
+		case ROUGE:
+			return Character.isUpperCase(this.lettre);
+		case T1:
+			return (this.largeur == 1 || this.hauteur == 1);
+		case T2:
+			return (this.largeur == 2 || this.hauteur == 2);
+		case T3:
+			return (this.largeur == 3 || this.hauteur == 3);
+		}
+		return false;
+    }
+    
     /*
      * Renvoie la lettre du carreau
      * 
@@ -107,27 +130,4 @@ public class Carreau {
 	public int getLargeur() {
 		return this.largeur;
 	}
-	
-    /*
-     * Permet de savoir si le carreau est du type indiqué
-     * 
-     * @param t : le type à tester
-     * @return true si le carreau est du type indiqué, false sinon
-     * @see Type.java
-     */
-    public boolean est(Type t) {
-    	switch(t) {
-		case BLEU:
-			return Character.isLowerCase(this.lettre);
-		case ROUGE:
-			return Character.isUpperCase(this.lettre);
-		case T1:
-			return (this.largeur == 1 || this.hauteur == 1);
-		case T2:
-			return (this.largeur == 2 || this.hauteur == 2);
-		case T3:
-			return (this.largeur == 3 || this.hauteur == 3);
-		}
-		return false;
-    }
 }

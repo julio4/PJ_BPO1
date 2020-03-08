@@ -16,14 +16,14 @@ public class Jeux {
 	private static boolean estFini(boolean status, JeuDeCartes pile, JeuDeCarreaux jdc) {
 		return jdc.estVide() || pile.estVide() || !status;
 	}
-	
+
 	/**
 	 * Fonction principale (main) permettant l'exécution d'une partie du jeux
 	 * 
 	 * @throws NoSuchAlgorithmException 
 	 */
 	public static void main(String[] args) throws NoSuchAlgorithmException {
-		
+
 		JeuDeCartes pile = new JeuDeCartes();
 		JeuDeCarreaux jdc = new JeuDeCarreaux();
 		Scanner sc = new Scanner(System.in);
@@ -43,14 +43,14 @@ public class Jeux {
 				//Affichage des instructions d'entrées et initialisation
 				boolean saisieValide = false;
 				while(!saisieValide) {
-					
+
 					//Affichage du mur et de l'instruction de la carte tirée
 					System.out.println(mur);
 					System.out.println(carte);
-					
+
 					//Affichage de la liste de Carreaux
 					System.out.println(listeCarreaux);
-					
+
 					System.out.println("Veuillez entrer la lettre correspondant au carreau choisi suivit du numéro de la ligne(y) et de la colonne(x).\n"
 							+ "Par exemple 'h 2 1' pour poser le carreau h à la 2ème ligne et à la première colonne.\n"
 							+ "Vous pouvez de plus écrire 'next' pour écarter la carte et passer au prochain tour ou 'stop' pour mettre fin à la partie.\n");

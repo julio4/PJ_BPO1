@@ -7,11 +7,11 @@ import java.util.Stack;
  * @author Jules Doumèche, Martin Gwénolé
  */
 public class JeuDeCartes {
-	
+
 	private static final int NB_CARTES = 33;
 	private Stack<Type> pile;
-	int CartesRestantes;
-	
+	private int CartesRestantes;
+
 	/*
 	 * Constructeur: JeuDeCartes
 	 * 
@@ -19,23 +19,23 @@ public class JeuDeCartes {
 	 */
 	public JeuDeCartes() {
 		this.pile = new Stack<>();
-		CartesRestantes = NB_CARTES;
+		this.CartesRestantes = NB_CARTES;
 
 		//Ajout des cartes de différents types
-        for(int i = 0; i < 9; ++i) {
-        	this.pile.add(Type.BLEU);
-        	this.pile.add(Type.ROUGE);
-        }
-        for(int i = 0; i < 5; ++i) {
-        	this.pile.add(Type.T1);
-    		this.pile.add(Type.T2);
-        	this.pile.add(Type.T3);
-        }
+		for(int i = 0; i < 9; ++i) {
+			this.pile.add(Type.BLEU);
+			this.pile.add(Type.ROUGE);
+		}
+		for(int i = 0; i < 5; ++i) {
+			this.pile.add(Type.T1);
+			this.pile.add(Type.T2);
+			this.pile.add(Type.T3);
+		}
 
-        //Mélange du jeu de cartes
-        Collections.shuffle(pile);
+		//Mélange du jeu de cartes
+		Collections.shuffle(pile);
 	}
-	
+
 	/**
 	 * Tire une carte et renvoie son type
 	 * 
@@ -43,11 +43,13 @@ public class JeuDeCartes {
 	 * @see Type.java
 	 */
 	public Type tirer() {
-		assert(CartesRestantes > 0);
-		CartesRestantes--;
+		if(CartesRestantes == 0) {
+			return null;
+		}
+		this.CartesRestantes--;
 		return pile.pop();
 	}
-	
+
 	/*
 	 * Vérifie si toutes les cartes ont été tirées
 	 * 
@@ -55,5 +57,15 @@ public class JeuDeCartes {
 	 */
 	public boolean estVide() {
 		return pile.isEmpty();
+	}
+
+	/*
+	 * Retourn le nombre de cartes restantes dans la piles
+	 * (test unitaires)
+	 * 
+	 * @return le nombres de cartes restantes
+	 */
+	public int getCartesRestantes() {
+		return this.CartesRestantes;
 	}
 }

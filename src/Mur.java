@@ -8,7 +8,7 @@ import java.util.Arrays;
  * @author Jules Doumèche, Martin Gwénolé
  */
 public class Mur {
-	
+
 	private static final int LARGEUR = 5;
 	private static final char LIBRE = ' ';
 	private ArrayList<char[]> grille;
@@ -24,7 +24,7 @@ public class Mur {
 	public Mur() {
 		this.grille = new ArrayList<>();
 	}
-	
+
 	/*
 	 * Constructeur: Mur et initialisation sans carreau neutre(pour les tests)
 	 * 
@@ -113,15 +113,15 @@ public class Mur {
 		if(rDépassement(c, x)) {
 			return "Le carreau dépasse la zone";
 		}
-		
+
 		if(rVide(c, y, x)) {
 			return "Le carreau repose sur une case vide";
 		}
-		
+
 		if(rSuperposé(c, y, x)) {
 			return "Le carreau est superposé à un autre";
 		}
-		
+
 		switch(rCloné(c, y, x)) {
 		case 0:
 			break;
@@ -138,10 +138,10 @@ public class Mur {
 		if(rIsolé(c, y ,x)) {
 			return "Le carreau ne touche aucun autre carreau";
 		}
-		
+
 		return "valide";
 	}
-	
+
 	/*
 	 * Vérifie si le carreau correspondant à la lettre indiquée peut-être poser aux coordonées spécifiées
 	 * (Pour test unitaires)
@@ -158,7 +158,7 @@ public class Mur {
 		return !(rDépassement(c, x) || rVide(c, y, x) 
 				|| rSuperposé(c, y, x) || rCloné(c, y, x) > 0 || rIsolé(c, y ,x));
 	}
-	
+
 	/*
 	 * Compte le nombre de niveau complétés
 	 * 
@@ -179,7 +179,16 @@ public class Mur {
 		}
 		return 0;
 	}
-	
+
+	/*
+	 * Retourne le mur ( uniquement pour les tests unitaires et débug )
+	 * 
+	 * @return la liste de liste correspondant au mur
+	 */
+	public ArrayList<char[]> getMur() {
+		return this.grille;
+	}
+
 	/**
 	 * Permet d'afficher le mur de bas en haut avec les numérotations
 	 * 
@@ -205,7 +214,7 @@ public class Mur {
 		sb.append("\n");
 		return sb.toString();
 	}
-	
+
 	/*
 	 * Vérifie si le carreau dépasse les bordures à l'abscisse x
 	 * 
@@ -216,7 +225,7 @@ public class Mur {
 	private boolean rDépassement(Carreau c, int x) {
 		return (x + c.getLargeur() - 1 > LARGEUR || x < 1);
 	}
-	
+
 	/*
 	 * Vérifie si le carreau ne repose pas entièrement sur des carreaux déjà posé aux positions x, y
 	 * 
@@ -235,7 +244,7 @@ public class Mur {
 		}
 		return false;
 	}
-	
+
 	/*
 	 * Vérifie si le carreau est superposé à un autre carreau aux positions x, y
 	 * 
@@ -245,25 +254,19 @@ public class Mur {
 	 * @return true si le carreau superpose au moins une case pleine, false sinon
 	 */
 	private boolean rSuperposé(Carreau c, int y, int x) {
-		while(grille.size() - y < c.getHauteur()) {
-			char[] ligne = new char[LARGEUR];
-			Arrays.fill(ligne, LIBRE);
-			grille.add(ligne);
-		}
-		
+		ajouterLignes(c, y);
+
 		for(int j = y; j < y + c.getHauteur(); ++j) {
 			for(int i = x; i < x + c.getLargeur(); ++i) {
 				if( this.grille.get(j - 1)[i - 1] != LIBRE) {
-					while(grille.size() - y < c.getHauteur()) {
-						grille.remove(grille.size());
-					}
+					retirerLignes(c, y);
 					return true;
 				}
 			}
 		}
 		return false;
 	}
-	
+
 	/*
 	 * Vérifie si le carreau ne clone aucune faces adjacentes aux positions x, y
 	 * 
@@ -274,35 +277,34 @@ public class Mur {
 	 * 3 si la face gauche du carreau est clonée, 0 si aucune faces du carreau n'est clonées
 	 */
 	private int rCloné(Carreau c, int y, int x) {
+
 		if( y > 1) {
 			char cTest = this.grille.get(y - 2)[x - 1];
 			if(cTest == this.grille.get(y - 2)[x + c.getLargeur() - 2]) {
 				if(cTest == 'x' && nx == c.getLargeur()) {
+					retirerLignes(c, y);
 					return 1;
 				}
 				else {
 					Carreau carInf = new Carreau(this.grille.get(y - 2)[x + c.getLargeur() - 2]);
 					if(carInf.getLargeur() == c.getLargeur()) {
+						retirerLignes(c, y);
 						return 1;
 					}
 				}
 			}
 		}
-		if( x != LARGEUR ) {
-			char cTest = this.grille.get(y - 1)[x];
-			if(cTest == this.grille.get(y + c.getHauteur() - 2)[x]) {
+		if( x - 1 + c.getLargeur() != LARGEUR ) {
+			char cTest = this.grille.get(y - 1)[x - 1 + c.getLargeur()];
+			if(cTest == this.grille.get(y + c.getHauteur() - 2)[x - 1 + c.getLargeur()]) {
 				if(cTest == 'x' && ny == c.getHauteur()) {
-					while(grille.size() - y < c.getHauteur()) {
-						grille.remove(grille.size());
-					}
+					retirerLignes(c, y);
 					return 2;
 				}
 				else {
-					Carreau carInf = new Carreau(this.grille.get(y + c.getHauteur() - 2)[x]);
+					Carreau carInf = new Carreau(this.grille.get(y + c.getHauteur() - 2)[x - 1 + c.getLargeur()]);
 					if( carInf.getHauteur() == c.getHauteur()) {
-						while(grille.size() - y < c.getHauteur()) {
-							grille.remove(grille.size());
-						}
+						retirerLignes(c, y);
 						return 2;
 					}
 				}
@@ -312,17 +314,13 @@ public class Mur {
 			char cTest = this.grille.get(y - 1)[x - 2];
 			if(cTest == this.grille.get(y + c.getHauteur() - 2)[x - 2]) {
 				if(cTest == 'x' && ny == c.getHauteur()) {
-					while(grille.size() - y < c.getHauteur()) {
-						grille.remove(grille.size());
-					}
+					retirerLignes(c, y);
 					return 3;
 				}
 				else {
 					Carreau carInf = new Carreau(this.grille.get(y + c.getHauteur() - 2)[x - 2]);
 					if( carInf.getHauteur() == c.getHauteur()) {
-						while(grille.size() - y < c.getHauteur()) {
-							grille.remove(grille.size());
-						}
+						retirerLignes(c, y);
 						return 3;
 					}
 				}
@@ -330,7 +328,36 @@ public class Mur {
 		}
 		return 0;
 	}
-	
+
+	/*
+	 * Permet d'ajouter les lignes supplémentaires nécessaires aux tests
+	 * si le carreau dépasse la ligne la plus haute
+	 * 
+	 * @param c : le carreau à vérifier
+	 * @param y : la ligne y où ajouter les lignes nécessaires
+	 * @see retirerLignes pour retirer les lignes si le carreau n'est pas valide
+	 */
+	private void ajouterLignes(Carreau c, int y) {
+		while(grille.size() - y < c.getHauteur()) {
+			char[] ligne = new char[LARGEUR];
+			Arrays.fill(ligne, LIBRE);
+			grille.add(ligne);
+		}
+	}
+
+	/*
+	 * Permet de supprimer les lignes supplémentaires nécessaires aux tests après ajouterLignes()
+	 * 
+	 * @param c : le carreau à vérifier
+	 * @param y : la ligne y où supprimer les lignes ajoutées précedemment
+	 * @see ajouterLignes pour ajouter les lignes
+	 */
+	private void retirerLignes(Carreau c, int y) {
+		while(grille.size() - y < c.getHauteur()) {
+			grille.remove(grille.size());
+		}
+	}
+
 	/*
 	 * Vérifie si le carreau ne touche aucune carreaux adjacents aux positions x, y
 	 * 

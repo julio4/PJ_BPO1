@@ -14,7 +14,7 @@ class CarreauTest {
 			assertTrue(Character.isUpperCase(c2.getLettre()));
 		}
 	}
-	
+
 	@Test
 	void testNeutre() {
 		Carreau ver = new Carreau(true);
@@ -30,7 +30,7 @@ class CarreauTest {
 		Carreau t1 = new Carreau('a');
 		Carreau t2 = new Carreau('b');
 		Carreau t3 = new Carreau('H');
-		
+
 		for(int i = 0; i < 5; ++i) {
 			switch(i) {
 			case 0:

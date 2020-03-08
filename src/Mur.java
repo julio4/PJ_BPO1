@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * Mur.java Définit le mur sur lesquels les carreaux sont posés
+ * Mur.java Définit le mur sur lequel les carreaux sont posés
  * 
  * @author Jules Doumèche, Martin Gwénolé
  */

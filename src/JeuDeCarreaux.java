@@ -3,7 +3,7 @@ import java.util.ArrayList;
 /**
  * JeuDeCarreaux.java Définit une liste de Carreau
  * 
- * @author Jules Doumèche, Martin Gwénolé
+ * @author Jules Doumèche, Gwénolé Martin
  */
 public class JeuDeCarreaux {
 
@@ -24,10 +24,10 @@ public class JeuDeCarreaux {
 	}
 
 	/*
-	 * Créer et initialise un jeu de carreaux contenant tout les carreaux restants du type indiqué
+	 * Crée et initialise un jeu de carreaux contenant tous les carreaux restants du type indiqué par la carte
 	 * 
 	 * @param type : le type du jeu de carreaux à créer
-	 * @return le jeu de carreaux crée
+	 * @return le jeu de carreaux créé
 	 */
 	public JeuDeCarreaux créerListe(Type type) {
 		JeuDeCarreaux retour = new JeuDeCarreaux();
@@ -42,19 +42,19 @@ public class JeuDeCarreaux {
 	}
 
 	/*
-	 * Vérifie si tout les carreaux ont été posés
+	 * Vérifie si tous les carreaux ont été posés
 	 * 
-	 * @return true s'il ne reste plus aucun carreaux, false sinon
+	 * @return true s'il ne reste plus aucun carreau, false sinon
 	 */
 	public boolean estVide() {
 		return this.jdc.isEmpty();
 	}
 
 	/*
-	 * Vérifie si le jeu de carreau contient le carreaux correspondant à la lettre indiquée
+	 * Vérifie si le jeu de carreau contient le carreau correspondant à la lettre indiquée
 	 * 
-	 * @param lettre : la lettre correspondant au carreau à vérifier
-	 * @return true si le jeu de carreaux contient le carreaux de la lettre indiqué, false sinon
+	 * @param lettre : la lettre qui correspond au carreau à vérifier
+	 * @return true si le jeu de carreaux contient le carreau de la lettre indiqué, false sinon
 	 */
 	public boolean contient(char lettre) {
 		for(int i = 0; i < jdc.size(); ++i) {
@@ -66,11 +66,11 @@ public class JeuDeCarreaux {
 	}
 
 	/*
-	 * Enlève du jeu de carreaux le carreaux correspondant à la lettre indiquée
+	 * Enlève du jeu de carreaux le carreau correspondant à la lettre indiquée
 	 * 
-	 * @param lettre : la lettre correspondant au carreau à enlever
+	 * @param lettre : la lettre qui correspond au carreau à enlever
 	 * @return true si la suppression a été effectuée, false sinon
-	 * @see contient(char lettre) pour vérifier la présence du Carreaux avant de l'enlever
+	 * @see contient(char lettre) pour vérifier la présence du carreau avant de l'enlever
 	 */
 	public boolean enlever(char lettre) {
 		if(this.contient(lettre)) {
@@ -87,7 +87,7 @@ public class JeuDeCarreaux {
 	/*
 	 * Retourne le nombre de carreaux non posés
 	 * 
-	 * @return nombres de carreaux non posés
+	 * @return nombre de carreaux non posés
 	 */
 	public int carreauxRestants() {
 		return jdc.size();

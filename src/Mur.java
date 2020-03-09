@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * Mur.java Définit le mur sur lequel les carreaux sont posés
  * 
- * @author Jules Doumèche, Martin Gwénolé
+ * @author Jules Doumèche, Gwénolé Martin
  */
 public class Mur {
 
@@ -16,10 +16,10 @@ public class Mur {
 	private int ny;
 
 	/*
-	 * Constructeur: Mur et initialisation sans carreau neutre(pour les tests)
+	 * Constructeur: Mur et initialisation sans carreau neutre (pour les tests)
 	 * 
 	 * @return le Mur initialisé
-	 * @see Mur(boolean pNeutre) pour pouvoir poser le carreau neutre dès l'initialisation du Mur
+	 * @see Mur(boolean pNeutre) pour pouvoir poser le carreau neutre à l'initialisation du Mur
 	 */
 	public Mur() {
 		this.grille = new ArrayList<>();
@@ -42,7 +42,7 @@ public class Mur {
 	/*
 	 * Pose le carreau neutre à l'une des 4 positions possibles aléatoirement
 	 * 
-	 * @see Mur(boolean pNeutre) pour pouvoir poser le carreau neutre dès l'initialisation du Mur
+	 * @see Mur(boolean pNeutre) pour pouvoir poser le carreau neutre à l'initialisation du Mur
 	 */
 	public void poserNeutre() {
 		SecureRandom r = new SecureRandom();
@@ -60,12 +60,12 @@ public class Mur {
 	}
 
 	/**
-	 * Pose le Carreau dans la grille aux coordonées validées
+	 * Pose le Carreau dans la grille aux coordonnées entrées (qui ont été vérifiées au préalable)
 	 * 
 	 * @param c : le carreau à poser
-	 * @param x : coordonée x où placer le carreau(le plus à gauche)
-	 * @param y : coordonée y où placer le carreau(le plus en bas)
-	 * @see poser(char lettre, int y, int x) pour pouvoir poser le Carreau en ne spécifiant que sa lettre et les coordonées
+	 * @param x : coordonnée x où placer le carreau (le plus à gauche)
+	 * @param y : coordonnée y où placer le carreau (le plus en bas)
+	 * @see poser(char lettre, int y, int x) pour pouvoir poser le Carreau en ne spécifiant que sa lettre et les coordonnées
 	 * @see verifier(char lettre, int y, int x) pour vérifier la validité du placement du carreau aux coordonnées indiquées
 	 */
 	public void poser(Carreau c, int y, int x) {
@@ -84,12 +84,12 @@ public class Mur {
 	}
 
 	/**
-	 * Pose le Carreau dans la grille aux coordonées validées
+	 * Pose le Carreau dans la grille aux coordonnées entrées (qui ont été vérifiées au préalable)
 	 * 
 	 * @param lettre : la lettre correspondant au carreau à poser
-	 * @param x : coordonée x où placer le carreau(le plus à gauche)
-	 * @param y : coordonée y où placer le carreau(le plus en bas)
-	 * @see poser(Carreau c, int y, int x) pour pouvoir poser le Carreau en spécifiant le Carreau et les coordonées
+	 * @param x : coordonnée x où placer le carreau(le plus à gauche)
+	 * @param y : coordonnée y où placer le carreau(le plus en bas)
+	 * @see poser(Carreau c, int y, int x) pour pouvoir poser le Carreau en spécifiant le Carreau et les coordonnées
 	 * @see verifier(char lettre, int y, int x) pour vérifier la validité du placement du carreau aux coordonnées indiquées
 	 */
 	public void poser(char lettre, int y, int x) {
@@ -98,11 +98,11 @@ public class Mur {
 	}
 
 	/*
-	 * Vérifie si le carreau correspondant à la lettre indiquée peut-être poser aux coordonées spécifiées
+	 * Vérifie si le carreau correspondant à la lettre indiquée peut-être posé aux coordonnées spécifiées
 	 * 
 	 * @param lettre : la lettre correspondant au carreau à vérifier
-	 * @param x : coordonée x du carreau(le plus à gauche)
-	 * @param y : coordonée y du carreau(le plus en bas)
+	 * @param x : coordonnée x du carreau(le plus à gauche)
+	 * @param y : coordonnée y du carreau(le plus en bas)
 	 * @return "Valide" si valide, sinon description de l'erreur
 	 * @see poser pour pouvoir poser le Carreau après vérification
 	 * @see fonctions de règles : rDépassement, rVide, rSuperposé, rCloné et rIsolé
@@ -126,7 +126,7 @@ public class Mur {
 		case 0:
 			break;
 		case 1:
-			return "La base du carreau clone la face supérieur du carreau inférieur";
+			return "La base du carreau clone la face supérieure du carreau inférieur";
 		case 2:
 			return "La face droite du carreau clone la face gauche du carreau à droite";
 		case 3:
@@ -143,11 +143,11 @@ public class Mur {
 	}
 
 	/*
-	 * Vérifie si le carreau correspondant à la lettre indiquée peut-être poser aux coordonées spécifiées
-	 * (Pour test unitaires)
+	 * Vérifie si le carreau correspondant à la lettre indiquée peut être posé aux coordonnées spécifiées
+	 * (Pour les tests unitaires)
 	 * 
-	 * @param x : coordonée x du carreau(le plus à gauche)
-	 * @param y : coordonée y du carreau(le plus en bas)
+	 * @param x : coordonnée x du carreau (le plus à gauche)
+	 * @param y : coordonnée y du carreau (le plus en bas)
 	 * @param lettre : la lettre correspondant au carreau à vérifier
 	 * @return true si valide, false sinon
 	 * @see poser pour pouvoir poser le Carreau après vérification
@@ -160,9 +160,9 @@ public class Mur {
 	}
 
 	/*
-	 * Compte le nombre de niveau complétés
+	 * Compte le nombre de lignes complètes
 	 * 
-	 * @return le nombre de niveau complets
+	 * @return le nombre de lignes complètes
 	 */
 	public int niveauComplets() {
 		int i = grille.size() - 1;
@@ -218,7 +218,7 @@ public class Mur {
 	/*
 	 * Vérifie si le carreau dépasse les bordures à l'abscisse x
 	 * 
-	 * @param c : le Carreau
+	 * @param c : le carreau
 	 * @param x : l'abscisse
 	 * @return true si le carreau dépasse les bordures du mur, false sinon
 	 */
@@ -248,10 +248,10 @@ public class Mur {
 	/*
 	 * Vérifie si le carreau est superposé à un autre carreau aux positions x, y
 	 * 
-	 * @param c : le Carreau
+	 * @param c : le carreau
 	 * @param y : l'ordonnée
 	 * @param x : l'abscisse
-	 * @return true si le carreau superpose au moins une case pleine, false sinon
+	 * @return true si le carreau se superpose à au moins une case pleine, false sinon
 	 */
 	private boolean rSuperposé(Carreau c, int y, int x) {
 		ajouterLignes(c, y);
@@ -268,13 +268,13 @@ public class Mur {
 	}
 
 	/*
-	 * Vérifie si le carreau ne clone aucune faces adjacentes aux positions x, y
+	 * Vérifie si le carreau ne clone aucune des faces adjacentes
 	 * 
-	 * @param c : le Carreau
+	 * @param c : le carreau
 	 * @param y : l'ordonnée
 	 * @param x : l'abscisse
 	 * @return 1 si la base du carreau est clonée, 2 si la face droite du carreau est clonée, 
-	 * 3 si la face gauche du carreau est clonée, 0 si aucune faces du carreau n'est clonées
+	 * 3 si la face gauche du carreau est clonée, 0 si aucune face du carreau n'est clonée
 	 */
 	private int rCloné(Carreau c, int y, int x) {
 
@@ -349,7 +349,7 @@ public class Mur {
 	 * Permet de supprimer les lignes supplémentaires nécessaires aux tests après ajouterLignes()
 	 * 
 	 * @param c : le carreau à vérifier
-	 * @param y : la ligne y où supprimer les lignes ajoutées précedemment
+	 * @param y : la ligne y pour supprimer les lignes ajoutées précedemment
 	 * @see ajouterLignes pour ajouter les lignes
 	 */
 	private void retirerLignes(Carreau c, int y) {
@@ -359,12 +359,12 @@ public class Mur {
 	}
 
 	/*
-	 * Vérifie si le carreau ne touche aucune carreaux adjacents aux positions x, y
+	 * Vérifie si le carreau ne touche aucun carreau adjacent aux positions x et y
 	 * 
-	 * @param c : le Carreau
+	 * @param c : le carreau
 	 * @param y : l'ordonnée
 	 * @param x : l'abscisse
-	 * @return true si le carreau est isolé et ne touche aucun carreaux, false sinon
+	 * @return true si le carreau est isolé et ne touche aucun carreau, false sinon
 	 */
 	private boolean rIsolé(Carreau c, int y, int x) {
 		return (y == 1 

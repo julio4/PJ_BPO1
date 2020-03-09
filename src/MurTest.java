@@ -1,6 +1,5 @@
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class MurTest {
@@ -52,7 +51,7 @@ class MurTest {
 		assertFalse(m.verifier(1, 2, 'a')); // clone gauche
 		assertFalse(m.verifier(1, 4, 'a')); // clone droite
 		assertFalse(m.verifier(2, 3, 'a')); // clone base
-		assertFalse(m.verifier(2, 3, 'h')); // repose case vide
+		assertFalse(m.verifier(2, 3, 'h')); // le carreau repose sur une case vide
 		assertFalse(m.verifier(1, 2, 'h')); // superposé
 		assertFalse(m.verifier(1, 4, 'h')); // dépassement zone
 	}

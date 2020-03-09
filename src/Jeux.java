@@ -2,23 +2,23 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 
 /**
- * Jeux.java Permet de jouer aux jeux "Team Up"
+ * Jeux.java Permet de jouer au jeu "The Tiler Team"
  * 
- * @author Jules Doumèche, Martin Gwénolé
+ * @author Jules Doumèche, Gwénolé Martin
  */
 public class Jeux {
 
 	/*
-	 * Vérifie si le jeux est fini
+	 * Vérifie si le jeu est fini
 	 * 
-	 * @return true si le jeux est fini, false sinon
+	 * @return true si le jeu est fini, false sinon
 	 */
 	private static boolean estFini(boolean status, JeuDeCartes pile, JeuDeCarreaux jdc) {
 		return jdc.estVide() || pile.estVide() || !status;
 	}
 
 	/**
-	 * Fonction principale (main) permettant l'exécution d'une partie du jeux
+	 * Fonction principale (main) permettant l'exécution d'une partie du jeu
 	 * 
 	 * @throws NoSuchAlgorithmException 
 	 */
@@ -36,7 +36,7 @@ public class Jeux {
 			//Tirer la carte
 			Type carte = pile.tirer();
 
-			//Liste des carreaux possible
+			//Liste des carreaux pouvant être posés
 			JeuDeCarreaux listeCarreaux = jdc.créerListe(carte);
 			if(!listeCarreaux.estVide()) {
 
@@ -67,7 +67,8 @@ public class Jeux {
 					}
 					else {
 
-						//Initialisations des variables d'entrées
+						// Initialisation des variables d'entrées
+						// Pour inverser le sens de saisie (qui est de base y puis x, vous pouvez inverser x et y ici (instructions l.76 et l.78))
 						char lettre = input.charAt(0);
 						int x = 0;
 						int y = 0;
@@ -88,7 +89,7 @@ public class Jeux {
 									}
 								}
 								else {
-									System.out.println("Erreur! Veuillez entrez un carreau affichée dans la liste précedente.\n");
+									System.out.println("Erreur! Veuillez entrez un carreau affiché dans la liste précedente.\n");
 								}
 							}
 						}
@@ -98,17 +99,17 @@ public class Jeux {
 			else {
 				++cartesEc;
 				System.out.println("Aucun carreau restant ne correspond à la carte tirée");
-				//TOUR SUIVANT
+				//passage au tour suivant automatiquement
 			}
 		}
-		//Fin de la partie
+		//Fin de la partie et calcul du score
 		int points = mur.niveauComplets() * 5 - jdc.carreauxRestants() - cartesEc;
 		if (points < 0) {
 			points = 0;
 		}
 		System.out.println(points + " points (" + mur.niveauComplets() + " niveaux complets, "
 				+ jdc.carreauxRestants() + " carreaux non posés, " + cartesEc +" cartes écartées)");
-		//CALCUL SCORE
+		
 
 		sc.close();
 	}

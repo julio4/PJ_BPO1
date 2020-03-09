@@ -1,7 +1,7 @@
 /**
  * Carreau.java Définit un carreau, sa lettre et ses dimensions.
  * 
- * @author Jules Doumèche, Martin Gwénolé
+ * @author Jules Doumèche, Gwénolé Martin
  */
 public class Carreau {
 
@@ -12,7 +12,7 @@ public class Carreau {
 	/*
 	 * Constructeur: Carreau en fonction de sa lettre
 	 * 
-	 * @param l : la lettre correspondant
+	 * @param l : la lettre correspondante
 	 * @return Carreau
 	 */
 	public Carreau(char l){
@@ -62,7 +62,7 @@ public class Carreau {
 	/*
 	 * Constructeur : Carreau neutre en fonction de son orientation
 	 * 
-	 * @param estVert : orientation Vertical ou Horizontal
+	 * @param estVert : orientation verticale ou horizontale
 	 * @return Carreau neutre
 	 */
 	public Carreau(boolean estVert) {

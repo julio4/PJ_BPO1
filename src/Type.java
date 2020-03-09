@@ -1,7 +1,7 @@
 /**
- * Type.java Définit les Types utilisées pour gérer les cartes et les carreaux
+ * Type.java Définit les types utilisés pour gérer les cartes (et donc les carreaux)
  * 
- * @author Jules Doumèche, Martin Gwénolé
+ * @author Jules Doumèche, Gwénolé Martin
  */
 public enum Type {
 	ROUGE,

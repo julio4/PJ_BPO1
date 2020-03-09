@@ -4,7 +4,7 @@ import java.util.Stack;
 /**
  * JeuDeCartes.java Définit une pile de 33 Cartes avec une instruction spécifiée par Type
  * 
- * @author Jules Doumèche, Martin Gwénolé
+ * @author Jules Doumèche, Gwénolé Martin
  */
 public class JeuDeCartes {
 
@@ -15,13 +15,13 @@ public class JeuDeCartes {
 	/*
 	 * Constructeur: JeuDeCartes
 	 * 
-	 * @return JeuDeCartes de 33 cartes, 9 Rouges, 9 bleues, 5 Taille 1, 5 Tailles 2 et 5 Tailles 3
+	 * @return JeuDeCartes de 33 cartes, 9 rouges, 9 bleues, 5 "taille 1", 5 "taille 2" et 5 "taille 3"
 	 */
 	public JeuDeCartes() {
 		this.pile = new Stack<>();
 		this.CartesRestantes = NB_CARTES;
 
-		//Ajout des cartes de différents types
+		//Ajouts des cartes des différents types
 		for(int i = 0; i < 9; ++i) {
 			this.pile.add(Type.BLEU);
 			this.pile.add(Type.ROUGE);
@@ -53,17 +53,17 @@ public class JeuDeCartes {
 	/*
 	 * Vérifie si toutes les cartes ont été tirées
 	 * 
-	 * @return true s'il ne reste plus aucune cartes, false sinon
+	 * @return true s'il ne reste plus aucune carte false sinon
 	 */
 	public boolean estVide() {
 		return pile.isEmpty();
 	}
 
 	/*
-	 * Retourn le nombre de cartes restantes dans la piles
-	 * (test unitaires)
+	 * Retourne le nombre de cartes restantes dans la pile
+	 * (pour les tests unitaires)
 	 * 
-	 * @return le nombres de cartes restantes
+	 * @return le nombre de cartes restantes
 	 */
 	public int getCartesRestantes() {
 		return this.CartesRestantes;
